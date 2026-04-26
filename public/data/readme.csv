@@ -1,0 +1,46 @@
+﻿Please cite this dataset as:;
+Alonso-Álvarez, P. (2025). AJOL dataset: structured metadata of articles and journals indexed in African Journals Online. Zenodo. 10.5281/zenodo.14899380;
+;
+Detailed information of the database construction process are reported in the following file:;
+ajol_database_report;
+;
+Details about the download process, methods and findings are reported in the following article:;
+Alonso-Álvarez, P. (2025). A small step towards the epistemic decentralization of science: a dataset of journals and publications indexed in African Journals Online. Zenodo. 10.5281/zenodo.14900054;
+;
+ajol_pub;
+variable;description
+ajol_id;unique identifier from AJOL
+source_id;unique journal identifier (internal)
+article_url;url where the article can be found in AJOL
+issue;issue
+volume;volume
+date;publication date (date of the issue was considered)
+year;publication year (year of the issue)
+title;title of the article
+first_page;first page
+last_page;last page
+;
+ajol_pub_author;
+ajol_id;unique identifier from AJOL
+author;author 
+;
+pub_keyword;
+ajol_id;unique identifier form AJOL
+keyword;article keywords
+;
+pub_openalex;
+ajol_id;unique identifier from AJOL
+work_id;work id form OpenAlex
+;
+source;
+source_id;unique source identifier (internal)
+title;journal title
+eissn;eissn
+issn_print;print issn
+country;journal country as recorded by AJOL
+jpps_status;JPPS category of the journal
+is_diamond;binary for whether journals are diamond access journals or not
+;
+source_area;
+source_id;unique source identifier (internal)
+area;journal research area as classified by AJOL

@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.env.local
+
+15383374.zip
+15383374/
+temp_auto_push.bat
+temp_interactive_push.bat

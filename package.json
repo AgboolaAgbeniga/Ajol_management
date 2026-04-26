@@ -6,12 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db-push": "node scripts/upload_to_supabase.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.104.1",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.4.2",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^1.11.0",
     "next": "16.2.4",
+    "papaparse": "^5.5.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "recharts": "^3.8.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

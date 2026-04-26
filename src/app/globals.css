@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: white;
+}
+
+/* Custom Scrollbar for a cleaner look */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #d1d5db;
+}
+
+/* Hide native checkbox and use custom peer styling via Tailwind */
+.custom-checkbox input:checked + div {
+    background-color: #111827;
+    border-color: #111827;
+}
+.custom-checkbox input:checked + div iconify-icon {
+    display: block;
+}
+
+/* Highlight utility for search terms */
+.search-highlight {
+    background-color: #fef08a;
+    color: #854d0e;
+    padding: 0 0.125rem;
+    border-radius: 0.125rem;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }

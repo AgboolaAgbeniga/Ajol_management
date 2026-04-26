@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJOL Systematic Review Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom Scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d1d5db;
+        }
+
+        /* Hide native checkbox and use custom peer styling via Tailwind */
+        .custom-checkbox input:checked + div {
+            background-color: #111827;
+            border-color: #111827;
+        }
+        .custom-checkbox input:checked + div svg {
+            display: block;
+        }
+        
+        /* Highlight utility for search terms */
+        .search-highlight {
+            background-color: #fef08a;
+            color: #854d0e;
+            padding: 0 0.125rem;
+            border-radius: 0.125rem;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 antialiased h-screen flex overflow-hidden selection:bg-gray-200 selection:text-black">
+
+    <!-- Left Sidebar: Search & Filters -->
+    <aside class="w-72 lg:w-80 border-r border-gray-200 flex flex-col h-full bg-gray-50/50 flex-shrink-0 hidden md:flex z-10 relative">
+        
+        <!-- App Header -->
+        <div class="h-14 border-b border-gray-200 flex items-center px-5 bg-white sticky top-0 z-20">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-black rounded flex items-center justify-center text-white font-semibold text-xs tracking-tight">A</div>
+                <h1 class="text-base font-semibold tracking-tight text-gray-900 leading-none">AJOL Review Platform</h1>
+            </div>
+        </div>
+
+        <!-- Scrollable Filters -->
+        <div class="flex-1 overflow-y-auto p-5 flex flex-col gap-6">
+            
+            <!-- Templates -->
+            <div class="flex flex-col gap-2">
+                <label class="text-xs font-medium text-gray-500 uppercase tracking-wider">Search Template</label>
+                <div class="relative">
+                    <select class="w-full appearance-none bg-white border border-gray-200 rounded-md py-2 pl-3 pr-8 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black cursor-pointer shadow-sm">
+                        <option>S1: General Sustainable Materials</option>
+                        <option selected>S2: Low-Carbon Binders</option>
+                        <option>S3a: Bio-based: Bamboo/Timber</option>
+                        <option>S3b: Bio-based: Hemp/Straw</option>
+                        <option>S4: Recycled/Waste-Based</option>
+                        <option>S5: Earth-Based/Traditional</option>
+                        <option>S6: Innovative/Emerging</option>
+                    </select>
+                    <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-2.5 text-gray-400 pointer-events-none" width="18"></iconify-icon>
+                </div>
+            </div>
+
+            <!-- Boolean Logic Toggle -->
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-medium text-gray-500 uppercase tracking-wider">Term Logic</label>
+                </div>
+                <div class="flex bg-gray-200/50 p-1 rounded-md">
+                    <button class="flex-1 py-1.5 text-xs font-medium rounded shadow-sm bg-white text-black border border-gray-200/50">AND</button>
+                    <button class="flex-1 py-1.5 text-xs font-medium rounded text-gray-500 hover:text-gray-900 transition-colors">OR</button>
+                </div>
+            </div>
+
+            <hr class="border-gray-200 border-dashed">
+
+            <!-- Field Filters -->
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-medium text-gray-700">Title</label>
+                    <input type="text" value='"low carbon cement" OR "LC3"' class="w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black shadow-sm placeholder-gray-400 transition-shadow">
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-medium text-gray-700">Keywords</label>
+                    <input type="text" value="calcined clay OR geopolymer" class="w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black shadow-sm placeholder-gray-400 transition-shadow">
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-medium text-gray-700">Author</label>
+                    <input type="text" placeholder="e.g. Smith, J." class="w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black shadow-sm placeholder-gray-400 transition-shadow">
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-medium text-gray-700">Journal</label>
+                    <div class="relative">
+                        <iconify-icon icon="solar:magnifer-linear" class="absolute left-3 top-2.5 text-gray-400" width="16"></iconify-icon>
+                        <input type="text" placeholder="Search journals..." class="w-full bg-white border border-gray-200 rounded-md pl-9 pr-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black shadow-sm placeholder-gray-400 transition-shadow">
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-medium text-gray-700">Year Range</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" value="2015" class="w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black shadow-sm transition-shadow text-center">
+                        <span class="text-gray-400 text-sm">-</span>
+                        <input type="number" value="2025" class="w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black shadow-sm transition-shadow text-center">
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-medium text-gray-700">Country</label>
+                    <div class="relative">
+                        <select class="w-full appearance-none bg-white border border-gray-200 rounded-md py-2 pl-3 pr-8 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black cursor-pointer shadow-sm">
+                            <option>All Countries</option>
+                            <option>Nigeria</option>
+                            <option>South Africa</option>
+                            <option>Kenya</option>
+                            <option>Ethiopia</option>
+                        </select>
+                        <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-2.5 text-gray-400 pointer-events-none" width="18"></iconify-icon>
+                    </div>
+                </div>
+
+                <!-- Custom Checkbox for Subject Area -->
+                <div class="flex flex-col gap-2 mt-1">
+                    <label class="text-xs font-medium text-gray-700">Subject Area</label>
+                    <div class="max-h-32 overflow-y-auto border border-gray-200 rounded-md bg-white p-2 flex flex-col gap-1 shadow-sm">
+                        <label class="flex items-center gap-2 p-1 hover:bg-gray-50 rounded cursor-pointer custom-checkbox">
+                            <input type="checkbox" class="sr-only" checked>
+                            <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center transition-colors">
+                                <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                            </div>
+                            <span class="text-sm text-gray-700">Technology</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-1 hover:bg-gray-50 rounded cursor-pointer custom-checkbox">
+                            <input type="checkbox" class="sr-only" checked>
+                            <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center transition-colors">
+                                <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                            </div>
+                            <span class="text-sm text-gray-700">Environmental Sciences</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-1 hover:bg-gray-50 rounded cursor-pointer custom-checkbox">
+                            <input type="checkbox" class="sr-only">
+                            <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center transition-colors">
+                                <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                            </div>
+                            <span class="text-sm text-gray-700">Agriculture</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Toggle Switch -->
+                <label class="relative inline-flex items-center cursor-pointer mt-2 group">
+                    <input type="checkbox" value="" class="sr-only peer">
+                    <div class="w-8 h-4.5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-black"></div>
+                    <span class="ml-3 text-sm font-medium text-gray-700 group-hover:text-black transition-colors">Diamond OA Only</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Sidebar Footer Actions -->
+        <div class="p-5 border-t border-gray-200 bg-white flex flex-col gap-2 sticky bottom-0 z-20">
+            <button class="w-full bg-black text-white rounded-md py-2 text-sm font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-black transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <iconify-icon icon="solar:magnifer-linear" width="16"></iconify-icon>
+                Run Search
+            </button>
+            <div class="flex gap-2">
+                <button class="flex-1 bg-white border border-gray-200 text-gray-700 rounded-md py-2 text-sm font-medium hover:bg-gray-50 transition-colors shadow-sm">Save</button>
+                <button class="flex-1 bg-white border border-gray-200 text-gray-700 rounded-md py-2 text-sm font-medium hover:bg-gray-50 transition-colors shadow-sm">Clear</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0 bg-white relative z-0">
+        
+        <!-- Top Toolbar -->
+        <header class="h-14 border-b border-gray-200 flex items-center justify-between px-4 md:px-6 bg-white shrink-0">
+            
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-black">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+                </button>
+                <div class="flex flex-col">
+                    <span class="text-lg tracking-tight font-semibold text-gray-900 leading-tight">1,248 Results</span>
+                    <span class="text-xs text-gray-500 font-medium hidden sm:block">No record cap applied • 21ms query time</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex items-center gap-2 border-r border-gray-200 pr-3 mr-1">
+                    <span class="text-xs text-gray-500 font-medium">Rows per page</span>
+                    <select class="appearance-none bg-transparent text-sm font-medium text-gray-900 focus:outline-none cursor-pointer">
+                        <option>50</option>
+                        <option>100</option>
+                        <option>250</option>
+                    </select>
+                </div>
+                
+                <button class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
+                    <iconify-icon icon="solar:document-text-linear" width="16"></iconify-icon>
+                    CSV
+                </button>
+                <button class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900 text-white rounded-md text-sm font-medium hover:bg-black transition-colors shadow-sm">
+                    <iconify-icon icon="solar:export-linear" width="16"></iconify-icon>
+                    Export RIS
+                </button>
+            </div>
+        </header>
+
+        <!-- Active Filters Bar -->
+        <div class="bg-gray-50 border-b border-gray-200 px-4 md:px-6 py-2 flex items-center gap-2 overflow-x-auto whitespace-nowrap hidden sm:flex shrink-0">
+            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider mr-2">Active:</span>
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-white border border-gray-200 text-xs font-medium text-gray-700 shadow-sm">
+                Title: "low carbon cement" OR "LC3"
+                <button class="text-gray-400 hover:text-black ml-1"><iconify-icon icon="solar:close-circle-linear" width="14"></iconify-icon></button>
+            </span>
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-white border border-gray-200 text-xs font-medium text-gray-700 shadow-sm">
+                Year: 2015-2025
+                <button class="text-gray-400 hover:text-black ml-1"><iconify-icon icon="solar:close-circle-linear" width="14"></iconify-icon></button>
+            </span>
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-white border border-gray-200 text-xs font-medium text-gray-700 shadow-sm">
+                Areas: Tech, Env Sci
+                <button class="text-gray-400 hover:text-black ml-1"><iconify-icon icon="solar:close-circle-linear" width="14"></iconify-icon></button>
+            </span>
+            <button class="text-xs text-blue-600 hover:text-blue-800 font-medium ml-2">Clear all</button>
+        </div>
+
+        <!-- Data Table -->
+        <div class="flex-1 overflow-auto bg-white">
+            <table class="w-full text-left border-collapse whitespace-nowrap min-w-[800px]">
+                <thead class="sticky top-0 bg-white shadow-[0_1px_0_0_#e5e7eb] z-10">
+                    <tr>
+                        <th class="w-12 px-4 py-3 text-center">
+                            <label class="custom-checkbox cursor-pointer inline-flex items-center">
+                                <input type="checkbox" class="sr-only">
+                                <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center bg-white">
+                                    <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                                </div>
+                            </label>
+                        </th>
+                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Article Title</th>
+                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-20">Year</th>
+                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Journal</th>
+                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Country</th>
+                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Keywords (Matched)</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 text-sm">
+                    
+                    <!-- Selected Row (Simulating the open drawer state) -->
+                    <tr class="bg-blue-50/40 hover:bg-blue-50/60 cursor-pointer transition-colors relative group">
+                        <td class="px-4 py-3.5 text-center">
+                            <label class="custom-checkbox cursor-pointer inline-flex items-center">
+                                <input type="checkbox" class="sr-only" checked>
+                                <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center bg-white">
+                                    <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                                </div>
+                            </label>
+                        </td>
+                        <td class="px-4 py-3.5 max-w-md truncate">
+                            <span class="font-medium text-gray-900 group-hover:underline">Performance evaluation of <span class="search-highlight">LC3</span> concrete using local laterite</span>
+                            <div class="text-xs text-gray-500 mt-0.5 truncate">Okafor, A., Mensah, K. • 2 Authors</div>
+                        </td>
+                        <td class="px-4 py-3.5 text-gray-600">2023</td>
+                        <td class="px-4 py-3.5 text-gray-600 max-w-[200px] truncate">Nigerian Journal of Technology</td>
+                        <td class="px-4 py-3.5 text-gray-600">Nigeria</td>
+                        <td class="px-4 py-3.5 text-gray-500 truncate max-w-[200px]">
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200">
+                                <span class="search-highlight bg-transparent text-gray-800 p-0">calcined clay</span>
+                            </span>
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200 ml-1">laterite</span>
+                        </td>
+                    </tr>
+
+                    <!-- Normal Row -->
+                    <tr class="hover:bg-gray-50 cursor-pointer transition-colors group">
+                        <td class="px-4 py-3.5 text-center">
+                            <label class="custom-checkbox cursor-pointer inline-flex items-center">
+                                <input type="checkbox" class="sr-only">
+                                <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center bg-white">
+                                    <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                                </div>
+                            </label>
+                        </td>
+                        <td class="px-4 py-3.5 max-w-md truncate">
+                            <span class="font-medium text-gray-900 group-hover:underline">Development of <span class="search-highlight">low carbon cement</span> from agricultural waste ashes</span>
+                            <div class="text-xs text-gray-500 mt-0.5 truncate">Adebayo, S., et al. • 4 Authors</div>
+                        </td>
+                        <td class="px-4 py-3.5 text-gray-600">2022</td>
+                        <td class="px-4 py-3.5 text-gray-600 max-w-[200px] truncate">Journal of Engineering and Built Environment</td>
+                        <td class="px-4 py-3.5 text-gray-600">South Africa</td>
+                        <td class="px-4 py-3.5 text-gray-500 truncate max-w-[200px]">
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200">ash</span>
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200 ml-1">pozzolan</span>
+                        </td>
+                    </tr>
+
+                    <!-- Normal Row -->
+                    <tr class="hover:bg-gray-50 cursor-pointer transition-colors group">
+                        <td class="px-4 py-3.5 text-center">
+                            <label class="custom-checkbox cursor-pointer inline-flex items-center">
+                                <input type="checkbox" class="sr-only">
+                                <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center bg-white">
+                                    <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                                </div>
+                            </label>
+                        </td>
+                        <td class="px-4 py-3.5 max-w-md truncate">
+                            <span class="font-medium text-gray-900 group-hover:underline">Review of <span class="search-highlight">geopolymer</span> binders for structural applications in sub-Saharan Africa</span>
+                            <div class="text-xs text-gray-500 mt-0.5 truncate">Kiprop, J., Wanjiku, M. • 2 Authors</div>
+                        </td>
+                        <td class="px-4 py-3.5 text-gray-600">2024</td>
+                        <td class="px-4 py-3.5 text-gray-600 max-w-[200px] truncate">African Journal of Science and Technology</td>
+                        <td class="px-4 py-3.5 text-gray-600">Kenya</td>
+                        <td class="px-4 py-3.5 text-gray-500 truncate max-w-[200px]">
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200">
+                                <span class="search-highlight bg-transparent text-gray-800 p-0">geopolymer</span>
+                            </span>
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200 ml-1">binder</span>
+                        </td>
+                    </tr>
+
+                     <!-- Normal Row -->
+                     <tr class="hover:bg-gray-50 cursor-pointer transition-colors group">
+                        <td class="px-4 py-3.5 text-center">
+                            <label class="custom-checkbox cursor-pointer inline-flex items-center">
+                                <input type="checkbox" class="sr-only">
+                                <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center bg-white">
+                                    <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                                </div>
+                            </label>
+                        </td>
+                        <td class="px-4 py-3.5 max-w-md truncate">
+                            <span class="font-medium text-gray-900 group-hover:underline">Compressive strength of <span class="search-highlight">LC3</span> mixtures cured under tropical conditions</span>
+                            <div class="text-xs text-gray-500 mt-0.5 truncate">Bekele, T. • 1 Author</div>
+                        </td>
+                        <td class="px-4 py-3.5 text-gray-600">2021</td>
+                        <td class="px-4 py-3.5 text-gray-600 max-w-[200px] truncate">Ethiopian Journal of Environmental Studies</td>
+                        <td class="px-4 py-3.5 text-gray-600">Ethiopia</td>
+                        <td class="px-4 py-3.5 text-gray-500 truncate max-w-[200px]">
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200">curing</span>
+                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-800 border border-gray-200 ml-1">strength</span>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="h-14 border-t border-gray-200 bg-white flex items-center justify-between px-4 md:px-6 shrink-0">
+            <span class="text-sm text-gray-500 font-medium">Showing 1 to 50 of 1,248</span>
+            <div class="flex items-center gap-1">
+                <button class="p-1.5 rounded text-gray-400 hover:text-black hover:bg-gray-100 disabled:opacity-50 transition-colors" disabled>
+                    <iconify-icon icon="solar:alt-arrow-left-linear" width="20"></iconify-icon>
+                </button>
+                <div class="flex items-center">
+                    <button class="w-8 h-8 flex items-center justify-center rounded bg-gray-100 text-sm font-medium text-gray-900">1</button>
+                    <button class="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-50 text-sm font-medium text-gray-600 transition-colors">2</button>
+                    <button class="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-50 text-sm font-medium text-gray-600 transition-colors">3</button>
+                    <span class="w-8 h-8 flex items-center justify-center text-sm font-medium text-gray-400">...</span>
+                    <button class="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-50 text-sm font-medium text-gray-600 transition-colors">25</button>
+                </div>
+                <button class="p-1.5 rounded text-gray-600 hover:text-black hover:bg-gray-100 transition-colors">
+                    <iconify-icon icon="solar:alt-arrow-right-linear" width="20"></iconify-icon>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Right Drawer: Article Detail (Simulating open state) -->
+    <aside class="w-full md:w-[380px] lg:w-[420px] bg-white border-l border-gray-200 shadow-[rgba(0,0,0,0.05)_-4px_0px_24px] absolute md:static right-0 top-0 h-full z-30 flex flex-col transform translate-x-0 transition-transform duration-300 shrink-0">
+        
+        <!-- Drawer Header -->
+        <div class="h-14 border-b border-gray-200 flex items-center justify-between px-5 bg-white shrink-0">
+            <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Record Details</span>
+            <div class="flex items-center gap-1">
+                <button class="p-1.5 text-gray-400 hover:text-black rounded transition-colors" title="Copy RIS">
+                    <iconify-icon icon="solar:copy-linear" width="18"></iconify-icon>
+                </button>
+                <button class="p-1.5 text-gray-400 hover:text-black rounded transition-colors" title="Close">
+                    <iconify-icon icon="solar:close-circle-linear" width="20"></iconify-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Drawer Content -->
+        <div class="flex-1 overflow-y-auto p-5 md:p-6 bg-white">
+            
+            <div class="mb-6">
+                <div class="flex items-start justify-between gap-4 mb-2">
+                    <h2 class="text-[19px] leading-snug tracking-tight font-semibold text-gray-900">
+                        Performance evaluation of LC3 concrete using local laterite
+                    </h2>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed font-medium">
+                    Okafor, A.<sup class="text-[10px] text-gray-400">1</sup>; Mensah, K.<sup class="text-[10px] text-gray-400">2</sup>
+                </p>
+            </div>
+
+            <div class="space-y-5">
+                
+                <!-- Metadata Grid -->
+                <div class="bg-gray-50/50 rounded-lg border border-gray-100 p-4 space-y-3">
+                    <div class="flex justify-between items-baseline gap-4 border-b border-gray-100 pb-2">
+                        <span class="text-xs font-medium text-gray-500 w-20 shrink-0">Journal</span>
+                        <span class="text-sm text-gray-900 font-medium text-right">Nigerian Journal of Technology</span>
+                    </div>
+                    <div class="flex justify-between items-baseline gap-4 border-b border-gray-100 pb-2">
+                        <span class="text-xs font-medium text-gray-500 w-20 shrink-0">Details</span>
+                        <span class="text-sm text-gray-900 text-right">2023 • Vol 42(1) • pp. 112-125</span>
+                    </div>
+                    <div class="flex justify-between items-baseline gap-4 border-b border-gray-100 pb-2">
+                        <span class="text-xs font-medium text-gray-500 w-20 shrink-0">Location</span>
+                        <span class="text-sm text-gray-900 text-right">Nigeria</span>
+                    </div>
+                    <div class="flex justify-between items-baseline gap-4">
+                        <span class="text-xs font-medium text-gray-500 w-20 shrink-0">Subject Areas</span>
+                        <span class="text-sm text-gray-900 text-right">Technology, Environmental Sciences</span>
+                    </div>
+                </div>
+
+                <!-- Abstract Placeholder -->
+                <div>
+                    <h3 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Abstract</h3>
+                    <div class="p-4 rounded-lg border border-dashed border-gray-200 bg-gray-50 text-center">
+                        <iconify-icon icon="solar:text-square-linear" class="text-gray-400 mb-1 mx-auto block" width="24"></iconify-icon>
+                        <p class="text-sm text-gray-500">Abstract text is not available in the v1 dataset. <br>Will be enriched via OpenAlex in v2.</p>
+                    </div>
+                </div>
+
+                <!-- Keywords -->
+                <div>
+                    <h3 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Author Keywords</h3>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">calcined clay</span>
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">laterite</span>
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">LC3</span>
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">compressive strength</span>
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">sustainable construction</span>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="flex flex-col gap-2 pt-2">
+                    <a href="#" class="flex items-center justify-between p-3 rounded-md border border-gray-200 hover:border-black hover:shadow-sm transition-all group">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-gray-500 group-hover:text-black group-hover:bg-gray-200 transition-colors">
+                                <iconify-icon icon="solar:link-linear" width="18"></iconify-icon>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-sm font-medium text-gray-900 leading-none mb-1">View on AJOL</span>
+                                <span class="text-[11px] text-gray-500 truncate w-48">ajol.info/index.php/njt/article/view/2451</span>
+                            </div>
+                        </div>
+                        <iconify-icon icon="solar:arrow-right-up-linear" class="text-gray-400 group-hover:text-black" width="16"></iconify-icon>
+                    </a>
+                    
+                    <a href="#" class="flex items-center justify-between p-3 rounded-md border border-gray-200 hover:border-black hover:shadow-sm transition-all group">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-gray-500 group-hover:text-black group-hover:bg-gray-200 transition-colors">
+                                <span class="text-[10px] font-bold tracking-tighter">DOI</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-sm font-medium text-gray-900 leading-none mb-1">Resolve DOI</span>
+                                <span class="text-[11px] text-gray-500">10.4314/njt.v42i1.12</span>
+                            </div>
+                        </div>
+                        <iconify-icon icon="solar:arrow-right-up-linear" class="text-gray-400 group-hover:text-black" width="16"></iconify-icon>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Mandatory Citation Block -->
+            <div class="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm">
+                <div class="flex items-center gap-1.5 mb-2">
+                    <iconify-icon icon="solar:info-circle-linear" class="text-gray-500" width="14"></iconify-icon>
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Mandatory Dataset Citation</p>
+                </div>
+                <p class="text-[11px] text-gray-600 leading-relaxed font-medium">
+                    Alonso-Alvarez, P. (2025). AJOL dataset: structured metadata of articles and journals indexed in African Journals Online. Zenodo. 
+                    <a href="https://doi.org/10.5281/zenodo.14899380" class="text-blue-600 hover:underline hover:text-blue-800 transition-colors">https://doi.org/10.5281/zenodo.14899380</a>
+                </p>
+            </div>
+            
+        </div>
+        
+        <!-- Drawer Footer Action -->
+        <div class="p-5 border-t border-gray-200 bg-white shrink-0">
+             <button class="w-full bg-white border border-gray-300 text-gray-900 rounded-md py-2.5 text-sm font-medium hover:bg-gray-50 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-200 transition-all shadow-sm flex items-center justify-center gap-2">
+                <label class="custom-checkbox cursor-pointer inline-flex items-center pointer-events-none">
+                    <input type="checkbox" class="sr-only" checked>
+                    <div class="w-4 h-4 border border-gray-300 rounded-sm flex items-center justify-center bg-white transition-colors">
+                        <iconify-icon icon="solar:check-read-linear" class="text-white hidden" width="12" stroke-width="2"></iconify-icon>
+                    </div>
+                </label>
+                Selected for Export
+            </button>
+        </div>
+    </aside>
+
+</body>
+</html>
